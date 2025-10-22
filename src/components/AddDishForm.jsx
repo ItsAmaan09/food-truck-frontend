@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import '../styles/addDishForm.css'
 export default function AddDishForm({ onAdd, token }) {
   const [item, setItem] = useState("");
   const [price, setPrice] = useState("");
@@ -36,7 +36,7 @@ export default function AddDishForm({ onAdd, token }) {
   };
 
   return (
-    <form style={{ marginTop: 12 }} onSubmit={submit}>
+    <form className="inputForm" onSubmit={submit}>
       <input
         type="text"
         value={item}
@@ -50,7 +50,7 @@ export default function AddDishForm({ onAdd, token }) {
         onChange={(e) => setPrice(e.target.value)}
         placeholder="Dish price"
       />
-      <button type="submit" style={{marginLeft:6}}>Add Dish</button>
+      <input type="submit" style={{marginLeft:6}} value='Submit'/>
     </form>
   );
 }

@@ -1,3 +1,5 @@
+import '../styles/dishItem.css'
+
 export default function DishItem({ dish, onDelete, token }) {
   const handleDelete = async () => {
     if (!token) return alert("Login required");
@@ -17,19 +19,11 @@ export default function DishItem({ dish, onDelete, token }) {
   };
 
   return (
-    <div
-      style={{
-        border: "1px solid #ddd",
-        padding: 10,
-        marginBottom: 8,
-        borderRadius: 6,
-      }}
-    >
-      <strong>{dish.item}</strong> - ${dish.price}
-      <div style={{ marginTop: 8 }}>
-        <button style={{ marginRight: 8 }} onClick={handleDelete}>
-          Delete
-        </button>
+    <div className="container-dishItem">
+      <strong>{dish.item}</strong> 
+      <strong>${dish.price}</strong>
+      <div>
+        <input type='button' onClick={handleDelete} value='Delete'/>
       </div>
     </div>
   );
