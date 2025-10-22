@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import MenuList from "./components/MenuList";
+import AddDishForm from "./components/AddDishForm";
+import Login from "./components/Login";
 
-function App() {
-  const [count, setCount] = useState(0)
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+export default function App() {
+  const [dishes, setDishes] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
+
+  const handleLogin = (t) => setToken(t);
+  const handleLogout = () => {
+    setToken(null);
+    localStorage.removeItem("token");
+  };
+  const [loading, setLoading] = useState(true);
+  const handleAdd = (dish) => setDishes((prev) => [dish, ...prev]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${API}/menu`);
+        const data = await res.json();
+
+        setDishes(data);
+      } catch (err) {
+        console.error("Failed to load: ", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) return <p>Loading menu...</p>;
+
+  const handleDelete = (id) => {
+    setDishes((prev) => prev.filter((d) => d._id !== id));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div style={{ padding: 20 }}>
+      <h1>🍔 Food Truck Dashboard</h1>
 
-export default App
+      {!token ? (
+        <Login onLogin={handleLogin} />
+      ) : (
+        <div>
+          <button onClick={handleLogout}>Logout</button>
+          <AddDishForm onAdd={handleAdd} token={token}></AddDishForm>
+          <MenuList dishes={dishes} onDelete={handleDelete} token={token} />
+        </div>
+      )}
+    </div>
+  );
+}
