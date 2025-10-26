@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import MenuList from "./MenuList";
 import AddDishForm from "./AddDishForm";
-import '../styles/dashboard.css'
+import "../styles/dashboard.css";
 const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function Dashboard() {
@@ -31,12 +31,21 @@ export default function Dashboard() {
   const handleDelete = (id) => {
     setDishes((prev) => prev.filter((d) => d._id !== id));
   };
+
+  const handleUpdate = (updated) =>
+    setDishes((prev) => prev.map((d) => (d._id === updated._id ? updated : d)));
+
   return (
     <div className="container">
-      <h1 style={{textAlign:'center'}}>🍔 Food Truck Dashboard</h1>
-      <div style={{textAlign:'center'}}>
+      <h1 style={{ textAlign: "center" }}>🍔 Food Truck Dashboard</h1>
+      <div style={{ textAlign: "center" }}>
         <AddDishForm onAdd={handleAdd} token={token}></AddDishForm>
-        <MenuList dishes={dishes} onDelete={handleDelete} token={token} />
+        <MenuList
+          dishes={dishes}
+          onDelete={handleDelete}
+          onUpdate={handleUpdate}
+          token={token}
+        />
       </div>
     </div>
   );

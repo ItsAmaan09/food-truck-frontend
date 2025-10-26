@@ -13,3 +13,11 @@ input[type="button"] {
   border-radius: 4px;
   cursor: pointer;
 }
+
+#saveBtn {
+  background-color: rgb(67, 67, 232);
+}
+
+#editBtn {
+  background-color: grey;
+}
