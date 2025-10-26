@@ -26,22 +26,24 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="login-container">
+      <h1>Login</h1>
       <form onSubmit={submit} style={{ marginTop: 12 }}>
-        <input
+        <div className="formField">
+        <input name="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="username"
         />
-        <input
+        <input name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="password"
           type="password"
-          style={{ marginLeft: 6 }}
         />
-        <button type="submit" style={{ marginLeft: 6 }}>
+        <button className="loginBtn" type="submit" style={{ marginLeft: 6 }}>
           Login
         </button>
+        </div>
       </form>
     </div>
   );

@@ -2,7 +2,7 @@ import { Routes, Link, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import { useState } from "react";
 import Login from "./components/Login";
-
+import "../src/App.css"
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const handleLogin = (t) => setToken(t);
@@ -19,7 +19,7 @@ export default function App() {
         <div>
           <nav style={{display:'flex', alignItems:'center', justifyContent:'space-around'}}> 
             <Link to="/">Home</Link>
-            <button  onClick={handleLogout}>Logout</button>
+            <button className="logoutbtn"  onClick={handleLogout}>Logout</button>
           </nav>
           <Routes>
             <Route path="/" element={<Dashboard />} />
